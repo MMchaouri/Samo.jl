@@ -1,4 +1,4 @@
-# src/Types.jl
+
 module Types
 
 # We export these so the Main Module (and the user) can see them
@@ -30,6 +30,15 @@ end
 mutable struct WorkoutSession
     date::String
     activities::Vector{AbstractActivity} # Polymorphism! Holds both types.
+end
+
+# Custom Outer Constructor using "Slurping" (...)
+# We can do now WorkoutSession("Today", ex1, ex2) instead of WorkoutSession("Today", [ex1, ex2])
+# outer constructor et demonstration de multiple dispatching
+function WorkoutSession(date::String, args::AbstractActivity...)
+    # The 'args...' collects all remaining arguments into a Tuple.
+    # We call the inner, two-argument constructor by passing the collected Vector.
+    return WorkoutSession(date, collect(args))
 end
 
 end
