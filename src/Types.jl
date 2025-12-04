@@ -41,4 +41,7 @@ function WorkoutSession(date::String, args::AbstractActivity...)
     return WorkoutSession(date, collect(args))
 end
 
+# Custom Constructor: Sets default RPE to 'nothing' if user forgets it
+StrengthExercise(name, weight, reps, sets) = StrengthExercise(name, weight, reps, sets, nothing)
+
 end
