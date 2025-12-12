@@ -31,5 +31,12 @@ println(" Session créée avec succès avec 3 activités.")
 println("   (Le vecteur contient un mélange de Strength et Cardio !)")
 println()
 
+
+brzycki = BrzyckiOneRepMaxEstimator()
+# Estime le 1RM de l'Overhead Press (50kg x 5 reps)
+max_press = brzycki(50.0, 5)
+
+println("1RM estimé pour l'Overhead Press: $max_press kg")
+
 # 4. Test de la Logique et de l'Affichage
 summarize(session)

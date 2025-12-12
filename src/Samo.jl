@@ -9,4 +9,8 @@ include("Logic.jl")
 using .Logic
 export calculate_load, summarize
 
+include("Utils.jl")
+using .Utils
+export AbstractOneRepMaxEstimator, BrzyckiOneRepMaxEstimator, @log # <-- Ajout
+
 end
