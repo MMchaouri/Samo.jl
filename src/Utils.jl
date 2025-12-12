@@ -65,4 +65,4 @@ macro log(session, name, weight, reps, sets, rpe=nothing)
     end
 end
 
-end # Fin du module Utils
+end 

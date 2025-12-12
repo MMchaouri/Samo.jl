@@ -1,9 +1,13 @@
 name = "Samo"
 uuid = "d4152caa-857b-41f0-9377-b1875bd73df3"
-authors = ["MMchaouri <m.mchaouri23@gmail.com> and contributors"]
 version = "1.0.0-DEV"
+authors = ["MMchaouri <m.mchaouri23@gmail.com> and contributors"]
+
+[deps]
+Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
 [compat]
+Unitful = "1.27.0"
 julia = "1.11"
 
 [extras]

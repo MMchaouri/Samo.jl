@@ -11,6 +11,6 @@ export calculate_load, summarize
 
 include("Utils.jl")
 using .Utils
-export AbstractOneRepMaxEstimator, BrzyckiOneRepMaxEstimator, @log # <-- Ajout
+export AbstractOneRepMaxEstimator, BrzyckiOneRepMaxEstimator, @log 
 
 end

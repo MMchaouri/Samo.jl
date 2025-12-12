@@ -1,47 +1,47 @@
-
 module Types
 
-# We export these so the Main Module (and the user) can see them
+# On a besoin de Unitful ici pour définir les champs du Cardio
+using Unitful 
+
 export AbstractActivity, StrengthExercise, CardioExercise, WorkoutSession
 
-# 1. The Parent (Abstract Type)
-# This is the "Bucket" that will hold both Strength and Cardio.
 abstract type AbstractActivity end
 
-# 2. Strength Exercise (Immutable Struct)
-# We use {T <: Real} so 'weight' can be an Int (100) or Float (100.5)
-struct StrengthExercise{T <: Real} <: AbstractActivity
+# ==============================================================================
+# 1. StrengthExercise
+# ==============================================================================
+struct StrengthExercise{T <: Number} <: AbstractActivity
     name::String
     weight::T
     reps::Int
     sets::Int
-    rpe::Union{Int, Nothing} # Optional! Can be an Integer OR Nothing
+    rpe::Union{Int, Nothing}
 end
 
-# 3. Cardio Exercise (Immutable Struct)
+# Constructeur externe pour gérer le RPE optionnel
+StrengthExercise(name, weight, reps, sets) = StrengthExercise(name, weight, reps, sets, nothing)
+
+# ==============================================================================
+# 2. CardioExercise
+# ==============================================================================
+# Ici, on force l'utilisateur à fournir des unités (ex: 30u"minute")
 struct CardioExercise <: AbstractActivity
     name::String
-    duration::Int      # Minutes
-    distance::Float64  # Kilometers
+    duration::Unitful.Time    # Le type doit être une durée (s, min, hr...)
+    distance::Unitful.Length  # Le type doit être une distance (m, km, mi...)
 end
 
-# 4. The Session (Mutable Struct)
-# It is "mutable" because we will ADD exercises to the vector later.
+# ==============================================================================
+# 3. WorkoutSession
+# ==============================================================================
 mutable struct WorkoutSession
     date::String
-    activities::Vector{AbstractActivity} # Polymorphism! Holds both types.
+    activities::Vector{AbstractActivity}
 end
 
-# Custom Outer Constructor using "Slurping" (...)
-# We can do now WorkoutSession("Today", ex1, ex2) instead of WorkoutSession("Today", [ex1, ex2])
-# outer constructor et demonstration de multiple dispatching
+# Constructeur "Varargs" (pour passer les exercices sans créer de liste manuelle)
 function WorkoutSession(date::String, args::AbstractActivity...)
-    # The 'args...' collects all remaining arguments into a Tuple.
-    # We call the inner, two-argument constructor by passing the collected Vector.
     return WorkoutSession(date, collect(args))
 end
-
-# Custom Constructor: Sets default RPE to 'nothing' if user forgets it
-StrengthExercise(name, weight, reps, sets) = StrengthExercise(name, weight, reps, sets, nothing)
 
 end
