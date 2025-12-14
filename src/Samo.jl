@@ -12,5 +12,7 @@ export calculate_load, summarize
 include("Utils.jl")
 using .Utils
 export AbstractOneRepMaxEstimator, BrzyckiOneRepMaxEstimator, @log 
+export save_session, analyze_progress, HISTORY
+export plot_progress
 
 end

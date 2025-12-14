@@ -11,18 +11,21 @@ end
 
 # Méthode Muscu : Conversion automatique en KG
 function calculate_load(e::StrengthExercise)
-    # 1. On convertit le poids en kg, peu importe l'unité d'entrée (lbs, g, stone...)
-    # u"kg" est l'unité kilogramme fournie par Unitful
-    weight_kg = uconvert(u"kg", e.weight)
+    # si unite existe -> on le convertit en kg
+    if isa(e.weight, Unitful.Quantity)
+        weight_kg = uconvert(u"kg", e.weight)
+        val = ustrip(weight_kg)
+    else
+        # sinon c'est kg par defaut
+        val = e.weight
+    end
     
-    # 2. On retire l'unité pour le score final (ustrip) sinon on aura des "kg*reps"
-    # (Optionnel : on pourrait garder les unités, mais simplifions pour le score total)
-    return ustrip(weight_kg) * e.reps * e.sets
+    return val * e.reps * e.sets
 end
 
 # Méthode Cardio
 function calculate_load(e::CardioExercise)
-    # On convertit tout en minutes et kilomètres pour normaliser le score
+    # On convertit tout en min et km pour normaliser le score
     t_min = ustrip(uconvert(u"minute", e.duration))
     d_km  = ustrip(uconvert(u"km", e.distance))
     
@@ -34,7 +37,6 @@ import Base: show
 
 function show(io::IO, e::StrengthExercise)
     rpe_str = isnothing(e.rpe) ? "" : "@ RPE $(e.rpe)"
-    # Julia affichera automatiquement l'unité (ex: "100 kg" ou "220 lbs")
     print(io, "🏋️ $(e.name): $(e.weight) x $(e.sets) x $(e.reps) $rpe_str")
 end
 

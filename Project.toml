@@ -1,12 +1,14 @@
 name = "Samo"
 uuid = "d4152caa-857b-41f0-9377-b1875bd73df3"
-version = "1.0.0-DEV"
 authors = ["MMchaouri <m.mchaouri23@gmail.com> and contributors"]
+version = "1.0.0-DEV"
 
 [deps]
+UnicodePlots = "b8865327-cd53-5732-bb35-84acbb429228"
 Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
 [compat]
+UnicodePlots = "3.8.1"
 Unitful = "1.27.0"
 julia = "1.11"
 

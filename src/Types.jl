@@ -1,6 +1,6 @@
 module Types
 
-# On a besoin de Unitful ici pour définir les champs du Cardio
+# Gestion des unités et autres trucs
 using Unitful 
 
 export AbstractActivity, StrengthExercise, CardioExercise, WorkoutSession
@@ -24,7 +24,7 @@ StrengthExercise(name, weight, reps, sets) = StrengthExercise(name, weight, reps
 # ==============================================================================
 # 2. CardioExercise
 # ==============================================================================
-# Ici, on force l'utilisateur à fournir des unités (ex: 30u"minute")
+# l'utilisateur doit fournir des unités (ex: 30u"minute")
 struct CardioExercise <: AbstractActivity
     name::String
     duration::Unitful.Time    # Le type doit être une durée (s, min, hr...)
@@ -39,7 +39,7 @@ mutable struct WorkoutSession
     activities::Vector{AbstractActivity}
 end
 
-# Constructeur "Varargs" (pour passer les exercices sans créer de liste manuelle)
+# Constructeur Slurping (pour passer les exercices sans créer de liste manuelle)
 function WorkoutSession(date::String, args::AbstractActivity...)
     return WorkoutSession(date, collect(args))
 end
